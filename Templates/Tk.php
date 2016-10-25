@@ -20,9 +20,11 @@
  */
 
 /**
- * @namespace Novutec\WhoisParser
+ * @namespace Novutec\Whois\Parser\Templates
  */
-namespace Novutec\WhoisParser;
+namespace Novutec\WhoisParser\Templates;
+
+use Novutec\WhoisParser\Templates\Type\Regex;
 
 /**
  * Template for .TK
@@ -32,7 +34,7 @@ namespace Novutec\WhoisParser;
  * @copyright  Copyright (c) 2007 - 2013 Novutec Inc. (http://www.novutec.com)
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  */
-class Template_Tk extends AbstractTemplate
+class Tk extends Regex
 {
 
     /**
@@ -80,7 +82,7 @@ class Template_Tk extends AbstractTemplate
         
         if (isset($ResultSet->contacts->owner[0]->address)) {
             $filteredAddress = array_map('trim', explode("\n", trim($ResultSet->contacts->owner[0]->address)));
-            
+            $filteredAddress = array_pad($filteredAddress, 9, '');            
             $ResultSet->contacts->owner[0]->organization = $filteredAddress[0];
             $ResultSet->contacts->owner[0]->name = $filteredAddress[1];
             $ResultSet->contacts->owner[0]->city = $filteredAddress[3];

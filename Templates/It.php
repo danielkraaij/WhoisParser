@@ -20,9 +20,11 @@
  */
 
 /**
- * @namespace Novutec\WhoisParser
+ * @namespace Novutec\Whois\Parser\Templates
  */
-namespace Novutec\WhoisParser;
+namespace Novutec\WhoisParser\Templates;
+
+use Novutec\WhoisParser\Templates\Type\Regex;
 
 /**
  * Template for .IT
@@ -32,7 +34,7 @@ namespace Novutec\WhoisParser;
  * @copyright  Copyright (c) 2007 - 2013 Novutec Inc. (http://www.novutec.com)
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  */
-class Template_It extends AbstractTemplate
+class It extends Regex
 {
 
     /**
@@ -104,7 +106,7 @@ class Template_It extends AbstractTemplate
         foreach ($ResultSet->contacts as $contactType => $contactArray) {
             foreach ($contactArray as $contactObject) {
                 $filteredAddress = array_map('trim', explode("\n", trim($contactObject->address)));
-                
+                $filteredAddress = array_pad($filteredAddress, 5, '');
                 $contactObject->address = $filteredAddress[0];
                 $contactObject->city = $filteredAddress[1];
                 $contactObject->zipcode = $filteredAddress[2];

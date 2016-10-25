@@ -20,9 +20,11 @@
  */
 
 /**
- * @namespace Novutec\WhoisParser
+ * @namespace Novutec\WhoisParser\Templates
  */
-namespace Novutec\WhoisParser;
+namespace Novutec\WhoisParser\Templates;
+
+use Novutec\WhoisParser\Templates\Type\Regex;
 
 /**
  * Template for IANA #146, #440
@@ -32,7 +34,7 @@ namespace Novutec\WhoisParser;
  * @copyright  Copyright (c) 2007 - 2013 Novutec Inc. (http://www.novutec.com)
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  */
-class Template_Gtld_godaddy extends AbstractTemplate
+class Gtld_godaddy extends Regex
 {
 
     /**
@@ -41,9 +43,12 @@ class Template_Gtld_godaddy extends AbstractTemplate
 	 * @var array
 	 * @access protected
 	 */
-    protected $blocks = array(1 => '/Registrant:(.*?)(?=Administrative Contact)/is', 
-            2 => '/Administrative Contact:(.*?)(?=Technical Contact)/is', 
-            3 => '/Technical Contact:(.*?)(?=Domain servers in listed order)/is');
+    protected $blocks = array(
+        1 => '/Domain Name:(.*?)(?=Registrar Abuse Contact Email)/is',
+        2 => '/Registrant:(.*?)(?=Administrative Contact)/is', 
+        3 => '/Administrative Contact:(.*?)(?=Technical Contact)/is', 
+        4 => '/Technical Contact:(.*?)(?=Domain servers in listed order)/is'
+    );
 
     /**
 	 * Items for each block
@@ -52,9 +57,11 @@ class Template_Gtld_godaddy extends AbstractTemplate
 	 * @access protected
 	 */
     protected $blockItems = array(
-            1 => array('/Registrant:\n(?>[\x20\t]*)(.+)/is' => 'contacts:owner:address'), 
-            2 => array('/Administrative Contact:\n(?>[\x20\t]*)(.+)/is' => 'contacts:admin:address'), 
-            3 => array('/Technical Contact:\n(?>[\x20\t]*)(.+)/is' => 'contacts:tech:address'));
+        1 => array('/Registrar Registration Expiration Date:\n(?>[\x20\t]*)(.+)/is' => 'expires'),
+        2 => array('/Registrant:\n(?>[\x20\t]*)(.+)/is' => 'contacts:owner:address'), 
+        3 => array('/Administrative Contact:\n(?>[\x20\t]*)(.+)/is' => 'contacts:admin:address'), 
+        4 => array('/Technical Contact:\n(?>[\x20\t]*)(.+)/is' => 'contacts:tech:address')
+    );
 
     /**
      * After parsing do something
